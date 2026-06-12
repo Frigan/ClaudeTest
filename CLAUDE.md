@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Git Workflow
 
-All changes must be committed with clean messages and pushed to GitHub.
+For the duration of this project: every change must be committed with a clean message, saved locally, and pushed to GitHub immediately. No exceptions.
 
 - **Remote:** https://github.com/Frigan/ClaudeTest (branch: `main`)
 - **Commit style:** Imperative subject line (≤72 chars), blank line, then a body explaining *why* if non-obvious
-- **After every meaningful change:** stage, commit, then `git push origin main`
+- **After every change:** stage → commit → `git push origin main`
 - **PowerShell commit syntax** (heredoc does not work in PowerShell):
   ```powershell
   git commit -m @'
