@@ -14,16 +14,25 @@
         "a rib-cracking body avalanche in the corner"
       ],
       "signature": [
-        "the Running Powerslam",
-        "the Gorilla Press Drop",
-        "the Chokeslam",
-        "the Iron Claw",
-        "the World's Strongest Slam",
-        "the Fallaway Slam",
-        "the Dominator",
-        "the Jackhammer",
-        "the Last Ride Powerbomb",
-        "the Torture Rack"
+        "the Spine-Shattering Megaton Bomb",
+        "the Apocalypse Powerbomb",
+        "the Tectonic Plate Chokeslam",
+        "the Concrete Cremator",
+        "the Extinction-Level Event Slam",
+        "the Continental Drift Suplex",
+        "the Gravitational Collapse Spinebuster",
+        "the Richter Scale Jackhammer",
+        "the Brimstone Gorilla Press",
+        "the Super-Collider Overhead Toss",
+        "the Iron Curtain Powerslam",
+        "the Avalanche Meat-Hook",
+        "the Doomsday Defibrillator",
+        "the Magma-Chamber Slam",
+        "the Bedrock Breaker",
+        "the Necro-Nomic Bomb",
+        "the Widowmaker Tiger Driver",
+        "the Final Judgement Death Valley Driver",
+        "the Judas Cradle Slam"
       ]
     },
     "Brawler": {
@@ -40,16 +49,25 @@
         "a mean-spirited hair pull takedown"
       ],
       "signature": [
-        "the Stone Cold Stunner",
-        "the Bionic Elbow",
-        "the DDT",
-        "the Piledriver",
-        "the Cactus Clothesline",
-        "the Mandible Claw",
-        "the Running Bulldog",
-        "the Mic Check",
-        "the Dirty Deeds",
-        "the Reality Check"
+        "the Skull-Fracture Lariat",
+        "the Concrete-Kisser Knee Strike",
+        "the Lights-Out Headbutt",
+        "the Blitzkrieg Big Boot",
+        "the Asphalt Backfist",
+        "the Seismic Superkick",
+        "the Carbon-Footprint Sole Kick",
+        "the Thunderclap Chop",
+        "the Shrapnel Spinning Heel Kick",
+        "the Overdrive Uppercut",
+        "the Alley-Cat Forearm Smash",
+        "the Guillotine Elbow Drop",
+        "the Total Eclipse Enzuigiri",
+        "the Jawbreaker Executioner",
+        "the Riot-Act Right Hand",
+        "the Armageddon Faceplant",
+        "the Abyss Facebuster",
+        "the Eternal Slumber Drop",
+        "the Brain-Melting Burning Hammer"
       ]
     },
     "High-Flyer": {
@@ -66,16 +84,24 @@
         "a suicide dive through the ropes"
       ],
       "signature": [
-        "the 450 Splash",
-        "the Shooting Star Press",
-        "the Swanton Bomb",
-        "the Frog Splash",
-        "the Corkscrew Moonsault",
-        "the Asai Moonsault",
-        "the Phoenix Splash",
-        "the Red Arrow",
-        "the Spiral Tap",
-        "the Dragonrana"
+        "the Supernova Shooting Star Piledriver",
+        "the Stratosphere Guillotine Drop",
+        "the Atmospheric Re-Entry Splash",
+        "the Chrono-Trigger Cannonball",
+        "the Kinetic-Energy Corkscrew",
+        "the Hellfire Phoenix Senton",
+        "the Nebula Swanton Blueprint",
+        "the Midnight Horizon 450",
+        "the Eclipse Vaulting Plancha",
+        "the Gravity-Defying Corpse-Maker",
+        "the Orbital Drop DDT",
+        "the Celestial Crossbody Matrix",
+        "the Sonic Boom Missile Dropkick",
+        "the Paradigm-Shifter Moonsault",
+        "the Horizon-Line Hurricanrana",
+        "the Code Red Crypt-Keeper",
+        "the Sudden Death Codebreaker",
+        "the Void-Walker Stunner"
       ]
     },
     "Technical": {
@@ -92,16 +118,25 @@
         "a clinical crossbody off the second rope"
       ],
       "signature": [
-        "the Sharpshooter",
-        "the Ankle Lock",
-        "the Crossface",
-        "the Walls of Jericho",
-        "the Figure Four Leglock",
-        "the Yes Lock",
-        "the Koji Clutch",
-        "the Rings of Saturn",
-        "the Cattle Mutilation",
-        "the Octopus Hold"
+        "the Spinal Cord Origami",
+        "the Nerve-Ending Neurotoxin Clutch",
+        "the Synapse-Shredding Sharpshooter",
+        "the Absolute Zero Ankle Lock",
+        "the Vertebrae Vise",
+        "the Ligament Liquefier",
+        "the Paradoxical Cloverleaf",
+        "the Neon Dragon Sleeper",
+        "the Crimson Tangle",
+        "the Catalyst Choke",
+        "the Asmodeus Armbar",
+        "the Human Pretzel Press",
+        "the Anatomy-Defying Abdominal Stretch",
+        "the Kinetic Restrictor Lock",
+        "the Cryptic Cobra Clutch",
+        "the Soul-Shattering Tombstone Cutter",
+        "the Singularity Piledriver",
+        "the Ragnarök Brainbuster",
+        "the Psychosomatic Suplex"
       ]
     }
   },
