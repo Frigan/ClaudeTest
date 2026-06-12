@@ -467,7 +467,19 @@ body {
 .opening-line    { color: var(--white); font-weight: 600; letter-spacing: 0.03em; }
 .special-line    { color: var(--gold); font-weight: 900; font-size: 1.05rem; text-align: center; }
 .win-line        { color: var(--gold); font-weight: 900; font-size: 1.15rem; text-shadow: 0 0 12px rgba(255,215,0,0.4); }
-.system-line     { color: var(--grey); font-size: 0.82rem; font-style: italic; }
+.system-line       { color: var(--grey); font-size: 0.82rem; font-style: italic; }
+.signature-move-line {
+  color: #ffb347;
+  font-weight: 700;
+}
+.stolen-move-line {
+  color: #00ffaa;
+  font-weight: 900;
+  font-size: 1.02rem;
+  border-left: 3px solid #00ffaa;
+  padding-left: 10px;
+  text-shadow: 0 0 8px rgba(0,255,170,0.35);
+}
 
 .commentary-divider {
   border: none;

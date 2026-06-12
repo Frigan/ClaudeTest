@@ -17,67 +17,46 @@ const STYLE_COLOR = {
   Technical:    '#74b9ff',
 };
 
-// ── Distinct wrestler colours (avoid red/gold/orange/neon-green/purple/cyan emphasis) ──
+const ALL_STYLES = ['Brawler', 'High-Flyer', 'Technical', 'Powerhouse'];
+
+// ── Distinct wrestler colours ─────────────────────────────────
 const WRESTLER_COLORS = [
-  '#FF6EB4', // hot pink
-  '#00CED1', // dark turquoise
-  '#7B68EE', // medium slate blue
-  '#00FA9A', // medium spring green
-  '#FF7F50', // coral
-  '#DA70D6', // orchid
-  '#87CEEB', // sky blue
-  '#DEB887', // burlywood
-  '#F08080', // light coral
-  '#40E0D0', // turquoise
-  '#9370DB', // medium purple
-  '#20B2AA', // light sea green
-  '#FA8072', // salmon
-  '#B0E0E6', // powder blue
-  '#FFB6C1', // light pink
-  '#98FB98', // pale green
-  '#DDA0DD', // plum
-  '#66CDAA', // medium aquamarine
-  '#F5DEB3', // wheat
-  '#82B1FF', // blue accent
+  '#FF6EB4', '#00CED1', '#7B68EE', '#00FA9A', '#FF7F50',
+  '#DA70D6', '#87CEEB', '#DEB887', '#F08080', '#40E0D0',
+  '#9370DB', '#20B2AA', '#FA8072', '#B0E0E6', '#FFB6C1',
+  '#98FB98', '#DDA0DD', '#66CDAA', '#F5DEB3', '#82B1FF',
 ];
 
-// ── Nickname pool ──────────────────────────────────────────────
+// ── Standard nickname pool ────────────────────────────────────
 const NICKNAMES = [
-  'The Bone Crusher',
-  'The Architect of Chaos',
-  'The Human Wrecking Ball',
-  'The Nightmare',
-  'The Juggernaut',
-  'The Phenom',
-  'The Beast Incarnate',
-  'The Last Outlaw',
-  'Walking Catastrophe',
-  'The Embodiment of Violence',
-  'Lord of Carnage',
-  'The Final Boss',
-  'The Certified Menace',
-  'The Human Liability',
-  'Dr. Devastation',
-  'Professor Pain',
-  'The Nightmare Made Flesh',
-  'Patient Zero',
-  'The Chaos Engine',
-  'The Physical Manifestation of Problems',
-  'The Violence Specialist',
-  'Absolute Unit',
-  'The Walking Warning Label',
-  'The Main Event Disaster',
-  'The Bringer of Woe',
-  'The Rampaging Id',
-  'The Human Event Horizon',
-  'The Unstoppable Catastrophe',
-  'The Calamity Express',
-  'The Unchecked Menace',
-  'The Doomsday Device',
-  'The Human Stress Test',
+  'The Bone Crusher',       'The Architect of Chaos',  'The Human Wrecking Ball',
+  'The Nightmare',          'The Juggernaut',           'The Phenom',
+  'The Beast Incarnate',    'The Last Outlaw',          'Walking Catastrophe',
+  'The Embodiment of Violence', 'Lord of Carnage',      'The Final Boss',
+  'The Certified Menace',   'The Human Liability',      'Dr. Devastation',
+  'Professor Pain',         'The Nightmare Made Flesh', 'Patient Zero',
+  'The Chaos Engine',       'The Physical Manifestation of Problems',
+  'The Violence Specialist','Absolute Unit',            'The Walking Warning Label',
+  'The Main Event Disaster','The Bringer of Woe',       'The Rampaging Id',
+  'The Human Event Horizon','The Unstoppable Catastrophe','The Calamity Express',
+  'The Unchecked Menace',   'The Doomsday Device',      'The Human Stress Test',
 ];
 
-// ── Commentary arrays ──────────────────────────────────────────
+// ── Earned nicknames based on stats ──────────────────────────
+function earnedNickname(wrestler) {
+  const s = wrestler.stats;
+  if (!s) return null;
+  if (s.wins >= 3)                                  return 'The Walking Dynasty';
+  if (s.wins >= 2)                                  return 'The Reigning Force';
+  if (s.wins >= 1 && s.timesEliminated === 0)       return 'The Untouchable';
+  if (s.rumbles >= 3 && s.timesEliminated === 0)    return 'The Immortal';
+  if (s.eliminations >= 8)                          return 'The Eliminator';
+  if (s.eliminations >= 4 && s.wins >= 1)           return 'The Dominator';
+  if (s.wins === 0 && s.rumbles >= 4)               return 'The Eternal Nearly-Man';
+  return null;
+}
+
+// ── Commentary arrays (narrative/dialogue — moves are in moves.json) ──
 
 const CATCHPHRASES = [
   'BAH GAWD!',
@@ -102,7 +81,7 @@ const CATCHPHRASES = [
   'THEY HAVE GONE ABSOLUTELY NUCLEAR IN THERE!',
   "I cannot in good conscience continue watching this — I lied, I absolutely can and WILL!",
   'This is THEATRE! This is SPECTACLE! This is WRESTLING!',
-  'Ring the bell! No — DON\'T ring it! Actually — RING IT!',
+  "Ring the bell! No — DON'T ring it! Actually — RING IT!",
   'My producer is telling me to calm down and I am respectfully REFUSING!',
   'We are making HISTORY tonight, folks. Write it down!',
   "If you blinked just now, I am deeply sorry for your loss!",
@@ -130,7 +109,6 @@ const ACTION_TEMPLATES = [
   '{D} SOMEHOW survives! How?! For the love of God, HOW?!',
   '{A} going old school — methodically grinding {D} down!',
   'WHAT A SEQUENCE from {A} and {D}! The crowd cannot believe it!',
-  '{A} with a signature maneuver — the ring SHAKES from the impact!',
   '{D} is showing incredible resilience and heart right now!',
   'This crowd is SPLIT DOWN THE MIDDLE between {A} and {D}!',
   '{A} HAS {D} over the top — NO! {D} skins the cat back in!',
@@ -143,15 +121,12 @@ const ACTION_TEMPLATES = [
   '{A} attempting to muscle {D} over — {D} WILL NOT give up the ropes!',
   'Shades of greatness from {A} as they target the legs of {D}!',
   '{A} grabs {D} by the collar and LAUNCHES them across the ring!',
-  '{A} going for {D}\'s legs — a tactical shift that has completely changed this match!',
   '{D} is using the ropes like a life preserver right now!',
   '{A} plants {D} with a DEVASTATING impact move — the entire ring shakes!',
   '{D} is hanging on by sheer force of WILL alone!',
   '{A} ROARS at the crowd after that sequence — pure, unadulterated intensity!',
   '{D} dodges {A}\'s charge and uses their own momentum against them — BRILLIANT!',
-  '{A} with a VICIOUS headlock, methodically grinding {D} down to the mat!',
   '{D} fires back! Right hand! Another! {A} is ROCKED!',
-  '{A} trying to use the ropes for leverage — absolutely ruthless tactics!',
   '{D} collapses into the corner — {A} senses the kill!',
   'THUNDEROUS exchange of blows from both {A} and {D}! Neither will give an inch!',
   '{A} charges — {D} sidesteps — {A} CRASHES into the turnbuckle! The crowd GASPS!',
@@ -169,10 +144,13 @@ const ACTION_TEMPLATES = [
   '{D} is draped over the ropes — {A} seizes the moment with vicious stomps!',
   '{A} locks eyes with {D} from across the ring — the temperature drops ten degrees!',
   '{D} rolls away just in time — instincts saving them from the worst!',
-  '{A} with a LEAPING attack that nearly sends both of them flying!',
-  'The crowd chants for {D} — it only seems to FUEL {A} further!',
   '{A} looking for a big slam — {D} escapes! The crowd exhales in RELIEF!',
   '{D} has lasted longer than ANYONE expected — {A} cannot believe it!',
+  'The crowd chants for {D} — it only seems to FUEL {A} further!',
+  '{A} with a LEAPING attack that nearly sends both of them flying!',
+  '{D} is essentially fighting on one leg here — but REFUSES to quit!',
+  '{A} going for the throat — literally and figuratively — on {D}!',
+  "It's a CHESS MATCH now — {A} and {D} trading positions around the ring!",
 ];
 
 const NEAR_ELIM_TEMPLATES = [
@@ -184,7 +162,6 @@ const NEAR_ELIM_TEMPLATES = [
   'OH MY GOD — {D} just hung on by one hand from the top rope! INCREDIBLE!',
   '{A} gets {D} up and OVER — {D} lands on the apron with both feet dangling!',
   '{D} rolls under {A}\'s legs — right to the ropes — dangling on the outside!',
-  '{A} has {D} in a bear hug and WALKS them toward the ropes — {D} sprawls out!',
   'The crowd HOLDS ITS BREATH as {D} teeters on the very edge of elimination!',
   '{A} LAUNCHES {D} — somehow they land on the apron and CLING to the ropes!',
   'IT LOOKED OVER FOR {D}! They grabbed {A}\'s tights on the way down — back in!',
@@ -194,6 +171,7 @@ const NEAR_ELIM_TEMPLATES = [
   '{D} almost touches the floor — one toe! Just one toe would end it! They pull back!',
   '{A} with a massive lift — {D} goes SIDEWAYS over the top — catches the rope with a HEEL!',
   '{D} is essentially on the floor — but both feet just barely on the apron still! STILL IN!',
+  '{A} and {D} are BOTH hanging over the apron — the crowd is going absolutely BERSERK!',
 ];
 
 const ELIM_TEMPLATES = [
@@ -211,10 +189,10 @@ const ELIM_TEMPLATES = [
   '{D} tried EVERYTHING — but {A} was just too much tonight! ELIMINATED!',
   '{A} with BRUTE FORCE — {D} didn\'t even see the final move coming! GONE!',
   'In the BLINK OF AN EYE — {D} is on the outside floor! Eliminated by {A}!',
-  'A ROLL OF THE DICE and {A} comes up GOLD — {D} ELIMINATED!',
   'Good night to {D}! Sent to the floor courtesy of {A}! OUT!',
   '{A} sidesteps the charge and uses {D}\'s OWN MOMENTUM — eliminated in SPECTACULAR fashion!',
   '{D} takes one step too many toward {A} — and pays the ULTIMATE price! ELIMINATED!',
+  'A ROLL OF THE DICE and {A} comes up GOLD — {D} ELIMINATED!',
 ];
 
 const ENTRANCE_TEMPLATES = [
@@ -304,16 +282,17 @@ const THIRD_WHEEL_LINES = [
 // STATE
 // ================================================================
 
-let allWrestlers       = [];
-let rumbleRoster       = [];
-let inRing             = [];
-let eliminated         = [];
-let entryQueue         = [];
-let entryIndex         = 0;
-let rumbleRunning      = false;
-let entrantTimer       = null;
-let finalTwoAnnounced  = false;
-let colorIndex         = 0;
+let allWrestlers      = [];
+let rumbleRoster      = [];
+let inRing            = [];
+let eliminated        = [];
+let entryQueue        = [];
+let entryIndex        = 0;
+let rumbleRunning     = false;
+let entrantTimer      = null;
+let finalTwoAnnounced = false;
+let colorIndex        = 0;
+let movesData         = null;  // loaded from moves.json
 
 // ================================================================
 // UTILITIES
@@ -324,10 +303,8 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 function escapeHTML(str) {
   if (str == null) return '';
   return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
@@ -342,17 +319,14 @@ function shuffle(arr) {
 }
 
 function ordinal(n) {
-  const s = ['th','st','nd','rd'];
-  const v = n % 100;
+  const s = ['th','st','nd','rd'], v = n % 100;
   return n + (s[(v - 20) % 10] || s[v] || s[0]);
 }
 
-// Fill template, vars values are treated as raw HTML
 function fill(template, vars) {
   return template.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? '');
 }
 
-// Wrestler name as a coloured HTML span
 function colorName(w) {
   if (!w) return 'Unknown';
   const color = w.color || '#f0f0f0';
@@ -370,7 +344,44 @@ function elimOdds(a, d) {
 }
 
 // ================================================================
-// API  (fetch → localStorage fallback for static hosting)
+// NICKNAME & SIGNATURE SYSTEMS
+// ================================================================
+
+function assignNicknameAtEntrance(wrestler) {
+  // Earned nicknames always take priority
+  const earned = earnedNickname(wrestler);
+  if (earned) {
+    if (wrestler.nickname !== earned) {
+      wrestler.nickname = earned;
+    }
+    return;
+  }
+  // Random nickname on first appearance (12%)
+  if (!wrestler.nickname && Math.random() < 0.12) {
+    wrestler.nickname = pick(NICKNAMES);
+  }
+}
+
+function assignSignatures(wrestler) {
+  if (wrestler.signatures && wrestler.signatures.length > 0) return;
+  if (!movesData) return;
+
+  // Check for manually-specified moves in moves.json wrestlers section
+  const manual = movesData.wrestlers?.[wrestler.name];
+  if (manual && manual.length > 0) {
+    wrestler.signatures = [...manual];
+    return;
+  }
+
+  // Assign 1–2 random signatures from style pool
+  const pool = movesData.styles[wrestler.style]?.signature;
+  if (!pool || pool.length === 0) return;
+  const count = Math.random() < 0.6 ? 2 : 1;
+  wrestler.signatures = shuffle([...pool]).slice(0, count);
+}
+
+// ================================================================
+// API  (fetch → localStorage fallback for static/GitHub Pages hosting)
 // ================================================================
 
 const LS_KEY = 'royalRumbleWrestlers';
@@ -386,7 +397,6 @@ async function fetchWrestlers() {
 }
 
 async function saveResults(updates) {
-  // Try the Express backend first; fall back to localStorage
   let usedServer = false;
   try {
     const res = await fetch('/api/wrestlers', {
@@ -395,20 +405,43 @@ async function saveResults(updates) {
       body: JSON.stringify(updates),
     });
     if (res.ok) usedServer = true;
-  } catch { /* no server */ }
+  } catch { }
 
   if (!usedServer) {
     try {
       const existing = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
       for (const update of updates) {
-        const idx = existing.findIndex(
-          w => w.name.toLowerCase() === update.name.toLowerCase()
-        );
-        idx >= 0 ? (existing[idx] = { ...existing[idx], ...update }) : existing.push(update);
+        const { elimsThisRumble, ...clean } = update;
+        const idx = existing.findIndex(w => w.name.toLowerCase() === clean.name.toLowerCase());
+        const newStats = idx >= 0
+          ? incrementStats(existing[idx].stats, clean, elimsThisRumble)
+          : freshStats(clean, elimsThisRumble);
+        idx >= 0
+          ? (existing[idx] = { ...existing[idx], ...clean, stats: newStats })
+          : existing.push({ ...clean, stats: newStats });
       }
       localStorage.setItem(LS_KEY, JSON.stringify(existing));
     } catch (e) { console.error('localStorage save failed:', e); }
   }
+}
+
+function incrementStats(prev = {}, update, elims = 0) {
+  const s = { rumbles: 0, wins: 0, eliminations: 0, timesEliminated: 0, ...prev };
+  return {
+    rumbles:         s.rumbles + 1,
+    wins:            s.wins + (update.lastRumble.placement === 1 ? 1 : 0),
+    eliminations:    s.eliminations + elims,
+    timesEliminated: s.timesEliminated + (update.lastRumble.eliminatedBy ? 1 : 0),
+  };
+}
+
+function freshStats(update, elims = 0) {
+  return {
+    rumbles:         1,
+    wins:            update.lastRumble.placement === 1 ? 1 : 0,
+    eliminations:    elims,
+    timesEliminated: update.lastRumble.eliminatedBy ? 1 : 0,
+  };
 }
 
 // ================================================================
@@ -425,17 +458,14 @@ function addComment(html, cls = '') {
 }
 
 function addDivider() {
-  const box = document.getElementById('commentary-content');
-  const hr  = document.createElement('hr');
+  const hr = document.createElement('hr');
   hr.className = 'commentary-divider';
-  box.appendChild(hr);
+  document.getElementById('commentary-content').appendChild(hr);
 }
 
 function updateInRingDisplay() {
-  const el    = document.getElementById('in-ring-list');
-  const count = document.getElementById('ring-count');
-  count.textContent = inRing.length;
-  el.innerHTML = inRing.map(w => `
+  document.getElementById('ring-count').textContent = inRing.length;
+  document.getElementById('in-ring-list').innerHTML = inRing.map(w => `
     <div class="ring-wrestler" style="border-left-color:${w.color || STYLE_COLOR[w.style]}">
       <span class="wrestler-name" style="color:${w.color || '#f0f0f0'}">${escapeHTML(w.name)}</span>
       <span class="wrestler-style" style="color:${STYLE_COLOR[w.style]}">${escapeHTML(w.style)}</span>
@@ -446,10 +476,7 @@ function updateInRingDisplay() {
 function updateNextEntrantsDisplay() {
   const el       = document.getElementById('next-list');
   const upcoming = entryQueue.slice(entryIndex, entryIndex + 3);
-  if (upcoming.length === 0) {
-    el.innerHTML = '<div class="no-next">No more entrants</div>';
-    return;
-  }
+  if (upcoming.length === 0) { el.innerHTML = '<div class="no-next">No more entrants</div>'; return; }
   el.innerHTML = upcoming.map((w, i) => `
     <div class="next-wrestler ${i === 0 ? 'next-up' : ''}">
       ${i === 0 ? '▶ ' : `${i + 1}. `}<span style="color:${w.color || '#f0f0f0'}">${escapeHTML(w.name)}</span>
@@ -459,37 +486,31 @@ function updateNextEntrantsDisplay() {
 }
 
 function updateStatsDisplay() {
-  const remaining = rumbleRoster.length - eliminated.length;
-  document.getElementById('remaining-count').textContent = remaining;
+  document.getElementById('remaining-count').textContent = rumbleRoster.length - eliminated.length;
   document.getElementById('eliminated-stat').textContent = `${eliminated.length} eliminated`;
 }
 
-function addToTicker(victimWrestler, eliminatorName) {
+function addToTicker(victim, eliminatorName) {
   const content = document.getElementById('ticker-content');
   const span    = document.createElement('span');
   span.className = 'ticker-item';
-  const c = victimWrestler.color || '#f0f0f0';
-  span.innerHTML = `<span style="color:${c}">${escapeHTML(victimWrestler.name)}</span> [by: ${escapeHTML(eliminatorName)}]`;
+  span.innerHTML = `<span style="color:${victim.color || '#f0f0f0'}">${escapeHTML(victim.name)}</span> [by: ${escapeHTML(eliminatorName)}]`;
   content.appendChild(span);
-  const track = document.querySelector('.ticker-track');
-  track.scrollLeft = track.scrollWidth;
+  document.querySelector('.ticker-track').scrollLeft = 99999;
 }
 
 function updateRosterDisplay() {
-  const list  = document.getElementById('roster-list');
   const count = document.getElementById('roster-count');
   count.textContent = rumbleRoster.length;
-  list.innerHTML = rumbleRoster.map(w => {
-    const hist    = w.lastRumble;
-    const histTxt = hist ? `Last: ${ordinal(hist.placement)} place` : 'Debut';
+  document.getElementById('roster-list').innerHTML = rumbleRoster.map(w => {
+    const histTxt = w.lastRumble ? `Last: ${ordinal(w.lastRumble.placement)} place` : 'Debut';
     return `
       <div class="roster-item" data-style="${escapeHTML(w.style)}">
         <span class="roster-name">${escapeHTML(w.name)}${w.nickname
           ? ` <em>&ldquo;${escapeHTML(w.nickname)}&rdquo;</em>` : ''}</span>
         <span class="roster-style" style="color:${STYLE_COLOR[w.style]}">${escapeHTML(w.style)}</span>
         <span class="roster-hist">${histTxt}</span>
-      </div>
-    `;
+      </div>`;
   }).join('');
   document.getElementById('start-btn').disabled = rumbleRoster.length < 2;
 }
@@ -499,40 +520,124 @@ function showReturnButton() {
 }
 
 // ================================================================
+// MOVES ENGINE
+// ================================================================
+
+function buildActionLine(attacker, defender) {
+  const roll = Math.random();
+
+  // 6%: stolen move — use DEFENDER's own signature against them
+  if (roll < 0.06 && defender.signatures?.length > 0) {
+    const move     = pick(defender.signatures);
+    const template = pick(movesData?.commentary?.stolenMove || []);
+    if (template) {
+      return {
+        html: fill(template, {
+          A:     colorName(attacker),
+          D:     colorName(defender),
+          OWNER: colorName(defender),
+          MOVE:  `<strong>${escapeHTML(move)}</strong>`,
+        }),
+        cls: 'stolen-move-line',
+      };
+    }
+  }
+
+  // 18%: attacker's own signature move
+  if (roll < 0.24 && attacker.signatures?.length > 0) {
+    const move     = pick(attacker.signatures);
+    const template = pick(movesData?.commentary?.signatureHit || []);
+    if (template) {
+      return {
+        html: fill(template, {
+          A:    colorName(attacker),
+          D:    colorName(defender),
+          MOVE: `<strong>${escapeHTML(move)}</strong>`,
+        }),
+        cls: 'signature-move-line',
+      };
+    }
+  }
+
+  // 15%: style-specific standard move woven into a short line
+  if (roll < 0.39) {
+    const standard = movesData?.styles?.[attacker.style]?.standard;
+    if (standard?.length > 0) {
+      const move = pick(standard);
+      const lines = [
+        `${colorName(attacker)} connects with ${move} on ${colorName(defender)}!`,
+        `${colorName(attacker)} drops ${colorName(defender)} with ${move}!`,
+        `${move.charAt(0).toUpperCase() + move.slice(1)} from ${colorName(attacker)} — ${colorName(defender)} is ROCKED!`,
+        `${colorName(attacker)} goes to the well with ${move} and it CONNECTS on ${colorName(defender)}!`,
+      ];
+      return { html: pick(lines), cls: '' };
+    }
+  }
+
+  // Default: narrative ACTION_TEMPLATE
+  return {
+    html: fill(pick(ACTION_TEMPLATES), { A: colorName(attacker), D: colorName(defender) }),
+    cls: '',
+  };
+}
+
+function actionLine(attacker, defender) {
+  const { html, cls } = buildActionLine(attacker, defender);
+  addComment(html, cls);
+}
+
+// ================================================================
 // NARRATIVE ENGINE
 // ================================================================
 
 async function historyCommentary(w) {
   if (!w.lastRumble) return;
   const h = w.lastRumble;
-  await sleep(1000);
+  await sleep(900);
   let line;
   if (h.placement === 1) {
     line = `${colorName(w)} WON the last Royal Rumble — can they make it back-to-back?!`;
   } else if (h.eliminatedBy) {
-    line = `${colorName(w)} finished ${ordinal(h.placement)} last time, eliminated by <strong>${escapeHTML(h.eliminatedBy)}</strong> with a ${escapeHTML(h.method)}! Does revenge factor in tonight?!`;
+    line = `${colorName(w)} finished ${ordinal(h.placement)} last time, eliminated by <strong>${escapeHTML(h.eliminatedBy)}</strong> with a ${escapeHTML(h.method)}! Is revenge on the agenda tonight?!`;
   } else {
-    line = `${colorName(w)} finished ${ordinal(h.placement)} last time — they will want to go one better tonight!`;
+    line = `${colorName(w)} finished ${ordinal(h.placement)} last time — they will want to do better tonight!`;
   }
   addComment(line, 'history-line');
 }
 
-async function entranceCommentary(w, entrantNumber) {
-  const line = fill(pick(ENTRANCE_TEMPLATES), { W: colorName(w), N: entrantNumber });
-  addComment(line, 'entrance-line');
-  await historyCommentary(w);
+async function entranceCommentary(wrestler, entrantNumber) {
+  // Assign signatures and nickname before building the commentary line
+  assignSignatures(wrestler);
+  assignNicknameAtEntrance(wrestler);
+
+  addComment(
+    fill(pick(ENTRANCE_TEMPLATES), { W: colorName(wrestler), N: entrantNumber }),
+    'entrance-line'
+  );
+
+  // Tease their signature move(s)
+  if (wrestler.signatures?.length > 0 && Math.random() < 0.55) {
+    await sleep(700);
+    const move  = pick(wrestler.signatures);
+    const teases = [
+      `Watch out for that signature <strong>${escapeHTML(move)}</strong> — it has ended careers before!`,
+      `If <strong>${escapeHTML(move)}</strong> connects tonight, somebody is going over that top rope!`,
+      `Keep your eyes on <strong>${escapeHTML(move)}</strong> — the most dangerous weapon in their arsenal!`,
+      `Everyone in that ring knows about <strong>${escapeHTML(move)}</strong>. The question is: can they stop it?`,
+    ];
+    addComment(pick(teases));
+  }
+
+  await historyCommentary(wrestler);
+
   if (Math.random() < 0.25) {
     await sleep(900);
     addComment(pick(CATCHPHRASES), 'catchphrase-line');
   }
 }
 
-function actionLine(attacker, defender) {
-  addComment(fill(pick(ACTION_TEMPLATES), { A: colorName(attacker), D: colorName(defender) }));
-}
-
 async function eliminationSequence(attacker, defender) {
-  const numLines = 3 + Math.floor(Math.random() * 3); // 3–5 lines of build-up
+  const numLines = 3 + Math.floor(Math.random() * 3);
 
   for (let i = 0; i < numLines; i++) {
     await sleep(2000 + Math.random() * 1200);
@@ -541,7 +646,6 @@ async function eliminationSequence(attacker, defender) {
         !inRing.find(w => w.name === defender.name)) return;
 
     if (i === numLines - 1) {
-      // Final build-up line: near-elimination
       addComment(
         fill(pick(NEAR_ELIM_TEMPLATES), { A: colorName(attacker), D: colorName(defender) }),
         'near-elim-line'
@@ -549,15 +653,12 @@ async function eliminationSequence(attacker, defender) {
     } else {
       actionLine(attacker, defender);
 
-      // Occasionally name-drop a third wrestler
       if (inRing.length >= 3 && Math.random() < 0.20) {
         const third = inRing.find(w => w.name !== attacker.name && w.name !== defender.name);
         if (third) addComment(fill(pick(THIRD_WHEEL_LINES), { C: colorName(third) }), 'catchphrase-line');
       }
 
-      if (Math.random() < 0.15) {
-        addComment(pick(CATCHPHRASES), 'catchphrase-line');
-      }
+      if (Math.random() < 0.15) addComment(pick(CATCHPHRASES), 'catchphrase-line');
     }
   }
 
@@ -566,26 +667,19 @@ async function eliminationSequence(attacker, defender) {
   if (!inRing.find(w => w.name === attacker.name) ||
       !inRing.find(w => w.name === defender.name)) return;
 
-  // ── 5% interference ───────────────────────────────────────────
+  // 5% interference
   if (Math.random() < 0.05) {
     const interloper = pickInterferer(attacker, defender);
-    if (interloper) {
-      await runInterference(interloper, defender, attacker);
-      return;
-    }
+    if (interloper) { await runInterference(interloper, defender, attacker); return; }
   }
 
-  // ── Resolve via style odds ────────────────────────────────────
+  // Resolve
   const attackerWins = Math.random() < elimOdds(attacker, defender);
   let winner, loser;
-
   if (attackerWins) {
     winner = attacker; loser = defender;
   } else {
-    addComment(
-      `${colorName(defender)} REVERSES! ${colorName(attacker)} is now in GRAVE DANGER!`,
-      'reversal-line'
-    );
+    addComment(`${colorName(defender)} REVERSES! ${colorName(attacker)} is now in GRAVE DANGER!`, 'reversal-line');
     await sleep(1600);
     winner = defender; loser = attacker;
   }
@@ -593,46 +687,31 @@ async function eliminationSequence(attacker, defender) {
   if (!inRing.find(w => w.name === winner.name) ||
       !inRing.find(w => w.name === loser.name)) return;
 
-  addComment(
-    fill(pick(ELIM_TEMPLATES), { A: colorName(winner), D: colorName(loser) }),
-    'elimination-line'
-  );
+  addComment(fill(pick(ELIM_TEMPLATES), { A: colorName(winner), D: colorName(loser) }), 'elimination-line');
   await sleep(1200);
   doElimination(loser, winner, pick(ELIMINATION_METHODS));
 }
 
-async function runInterference(interferer, victim, otherWrestler) {
-  addComment(
-    fill(pick(INTERFERENCE_TEMPLATES), { I: colorName(interferer), V: colorName(victim) }),
-    'interference-line'
-  );
+async function runInterference(interferer, victim, other) {
+  addComment(fill(pick(INTERFERENCE_TEMPLATES), { I: colorName(interferer), V: colorName(victim) }), 'interference-line');
   await sleep(2000);
   addComment(
     `${colorName(interferer)} WITH THE SNEAK ATTACK — ${colorName(victim)} GOES OVER THE TOP ROPE! ELIMINATED!`,
     'elimination-line'
   );
   await sleep(1200);
-
-  const creditName = interferer.name + ' (interference)';
-  doElimination(victim, { name: creditName }, pick(ELIMINATION_METHODS));
-  addComment(
-    `The referee can do NOTHING — outside interference is perfectly legal in a Royal Rumble! ${colorName(otherWrestler)} is absolutely FURIOUS!`
-  );
+  doElimination(victim, { name: interferer.name + ' (interference)' }, pick(ELIMINATION_METHODS));
+  addComment(`The referee can do NOTHING — outside interference is perfectly legal! ${colorName(other)} is absolutely FURIOUS!`);
 }
 
 function pickInterferer(attacker, defender) {
-  const candidates = [];
-  for (const e of eliminated) {
-    if (e.wrestler.name !== attacker.name && e.wrestler.name !== defender.name) {
-      candidates.push(e.wrestler);
-    }
-  }
-  for (const w of allWrestlers) {
-    const inThisRumble = rumbleRoster.some(r => r.name.toLowerCase() === w.name.toLowerCase());
-    if (!inThisRumble && w.name !== attacker.name && w.name !== defender.name) {
-      candidates.push({ ...w, color: '#f0f0f0' });
-    }
-  }
+  const candidates = [
+    ...eliminated.map(e => e.wrestler).filter(w => w.name !== attacker.name && w.name !== defender.name),
+    ...allWrestlers
+      .filter(w => !rumbleRoster.some(r => r.name.toLowerCase() === w.name.toLowerCase())
+                && w.name !== attacker.name && w.name !== defender.name)
+      .map(w => ({ ...w, color: '#f0f0f0' })),
+  ];
   return candidates.length > 0 ? pick(candidates) : null;
 }
 
@@ -652,28 +731,20 @@ function doElimination(victim, eliminator, method) {
   updateInRingDisplay();
   updateStatsDisplay();
 
-  // Bring in a waiting entrant after a short pause
   if (entryIndex < entryQueue.length) {
     setTimeout(() => {
-      if (rumbleRunning && inRing.length < 6 && entryIndex < entryQueue.length) {
-        enterWrestler();
-      }
+      if (rumbleRunning && inRing.length < 6 && entryIndex < entryQueue.length) enterWrestler();
     }, 3500);
   }
 }
 
 async function enterWrestler() {
-  if (entryIndex >= entryQueue.length) return;
-  if (inRing.length >= 6) return;
-
-  const wrestler = entryQueue[entryIndex];
-  entryIndex++;
+  if (entryIndex >= entryQueue.length || inRing.length >= 6) return;
+  const wrestler = entryQueue[entryIndex++];
   inRing.push(wrestler);
-
   updateInRingDisplay();
   updateNextEntrantsDisplay();
   updateStatsDisplay();
-
   await entranceCommentary(wrestler, entryIndex);
 }
 
@@ -684,15 +755,10 @@ async function actionLoop() {
     await sleep(2200 + Math.random() * 1600);
     if (!rumbleRunning) break;
 
-    // Win condition
-    if (inRing.length === 1 && entryIndex >= entryQueue.length) {
-      await endRumble();
-      break;
-    }
+    if (inRing.length === 1 && entryIndex >= entryQueue.length) { await endRumble(); break; }
     if (inRing.length === 0) break;
     if (inRing.length < 2) continue;
 
-    // Final-two announcement
     if (inRing.length === 2 && entryIndex >= entryQueue.length && !finalTwoAnnounced) {
       finalTwoAnnounced = true;
       addDivider();
@@ -702,10 +768,7 @@ async function actionLoop() {
     }
 
     ticksSinceElim++;
-    const shuffled  = shuffle(inRing);
-    const attacker  = shuffled[0];
-    const defender  = shuffled[1];
-
+    const [attacker, defender] = shuffle(inRing);
     const ringFull  = inRing.length >= 6 && entryIndex < entryQueue.length;
     const thresh    = inRing.length >= 5 ? 3 : (inRing.length >= 4 ? 4 : 6);
     const goForElim = ringFull || ticksSinceElim >= thresh || Math.random() < 0.28;
@@ -721,12 +784,9 @@ async function actionLoop() {
 }
 
 function startEntrantTimer() {
-  // No initial call — first two are handled directly in startRumble()
   entrantTimer = setInterval(() => {
     if (!rumbleRunning) { clearInterval(entrantTimer); return; }
-    if (entryIndex < entryQueue.length && inRing.length < 6) {
-      enterWrestler();
-    }
+    if (entryIndex < entryQueue.length && inRing.length < 6) enterWrestler();
     if (entryIndex >= entryQueue.length) clearInterval(entrantTimer);
   }, 10000);
 }
@@ -743,24 +803,30 @@ async function endRumble() {
   addComment(fill(pick(WIN_TEMPLATES), { W: colorName(winner) }), 'win-line');
   await sleep(1800);
   addComment(
-    `${colorName(winner)} raises their arms in absolute TRIUMPH! An incredible performance — one for the ages!`,
+    `${colorName(winner)} raises their arms in absolute TRIUMPH! One for the ages!`,
     'win-line'
   );
 
   eliminated.push({ wrestler: winner, eliminatedBy: null, method: null, placement: 1 });
 
-  const results = [...eliminated].map(e => ({
-    name:       e.wrestler.name,
-    style:      e.wrestler.style,
-    nickname:   e.wrestler.nickname || null,
-    lastRumble: {
-      placement:    e.placement,
-      eliminatedBy: e.eliminatedBy
-        ? e.eliminatedBy.replace(' (interference)', '')
-        : null,
-      method: e.method || null,
-    },
-  }));
+  const results = eliminated.map(e => {
+    const elimsThisRumble = eliminated.filter(x =>
+      x.eliminatedBy &&
+      x.eliminatedBy.replace(' (interference)', '').toLowerCase() === e.wrestler.name.toLowerCase()
+    ).length;
+    return {
+      name:             e.wrestler.name,
+      style:            e.wrestler.style,
+      nickname:         e.wrestler.nickname  || null,
+      signatures:       e.wrestler.signatures || [],
+      elimsThisRumble,
+      lastRumble: {
+        placement:    e.placement,
+        eliminatedBy: e.eliminatedBy ? e.eliminatedBy.replace(' (interference)', '') : null,
+        method:       e.method || null,
+      },
+    };
+  });
 
   await saveResults(results);
   await sleep(500);
@@ -773,47 +839,44 @@ async function endRumble() {
 // ================================================================
 
 async function addWrestlerToRoster() {
-  const nameEl = document.getElementById('name-input');
+  const nameEl  = document.getElementById('name-input');
   const styleEl = document.getElementById('style-select');
-  const name  = nameEl.value.trim();
-  const style = styleEl.value;
+  const name    = nameEl.value.trim();
+  let   style   = styleEl.value;
 
-  if (!name || !style) { nameEl.focus(); return; }
+  if (!name) { nameEl.focus(); return; }
+
+  // Resolve random style
+  if (!style || style === 'Random') style = pick(ALL_STYLES);
 
   if (rumbleRoster.some(w => w.name.toLowerCase() === name.toLowerCase())) {
     alert(`${name} is already on the roster!`);
     return;
   }
 
-  const historical = allWrestlers.find(w => w.name.toLowerCase() === name.toLowerCase());
+  const hist = allWrestlers.find(w => w.name.toLowerCase() === name.toLowerCase());
 
   rumbleRoster.push({
     name,
     style,
-    nickname:   historical?.nickname   || null,
-    lastRumble: historical?.lastRumble || null,
-    color:      null, // assigned at rumble start
+    nickname:   hist?.nickname   || null,
+    signatures: hist?.signatures || [],
+    stats:      hist?.stats      || null,
+    lastRumble: hist?.lastRumble || null,
+    color:      null,
   });
 
   updateRosterDisplay();
   nameEl.value  = '';
-  styleEl.value = '';
+  styleEl.value = 'Random';
   nameEl.focus();
 }
 
 async function startRumble() {
-  // Assign nicknames (12% chance for new wrestlers)
-  for (const w of rumbleRoster) {
-    if (!w.nickname && Math.random() < 0.12) {
-      w.nickname = pick(NICKNAMES);
-    }
-  }
-
   // Assign distinct colours
   colorIndex = 0;
   for (const w of rumbleRoster) {
-    w.color = WRESTLER_COLORS[colorIndex % WRESTLER_COLORS.length];
-    colorIndex++;
+    w.color = WRESTLER_COLORS[colorIndex++ % WRESTLER_COLORS.length];
   }
 
   entryQueue          = shuffle(rumbleRoster);
@@ -822,7 +885,6 @@ async function startRumble() {
   eliminated          = [];
   finalTwoAnnounced   = false;
 
-  // Switch screens
   document.getElementById('setup-screen').hidden  = true;
   document.getElementById('rumble-screen').hidden = false;
   document.getElementById('ticker-bar').hidden    = false;
@@ -833,7 +895,6 @@ async function startRumble() {
   updateNextEntrantsDisplay();
   updateStatsDisplay();
 
-  // Pre-show
   addComment('LADIES AND GENTLEMEN — WELCOME TO THE ROYAL RUMBLE!', 'opening-line');
   await sleep(1400);
   addComment(
@@ -845,19 +906,24 @@ async function startRumble() {
   if (veterans.length > 0) {
     await sleep(1400);
     addComment(
-      `Returning veterans in tonight\'s field: ${veterans.map(v => colorName(v)).join(', ')}!`,
+      `Returning veterans tonight: ${veterans.map(v => colorName(v)).join(', ')}!`,
       'history-line'
     );
   }
 
   await sleep(1600);
   addDivider();
-  addComment("THE OPENING BELL RINGS!", 'opening-line');
+  addComment('THE OPENING BELL RINGS!', 'opening-line');
   await sleep(1000);
 
-  // ── Enter FIRST TWO simultaneously ────────────────────────────
+  // Enter FIRST TWO simultaneously
   const w1 = entryQueue[entryIndex++];
   const w2 = entryQueue[entryIndex++];
+
+  // Assign signatures/nicknames for the opening pair before commentary
+  assignSignatures(w1); assignNicknameAtEntrance(w1);
+  assignSignatures(w2); assignNicknameAtEntrance(w2);
+
   inRing.push(w1, w2);
   updateInRingDisplay();
   updateNextEntrantsDisplay();
@@ -873,7 +939,6 @@ async function startRumble() {
   await sleep(800);
   addDivider();
 
-  // Start timer for remaining entrants and action
   rumbleRunning = true;
   startEntrantTimer();
   actionLoop();
@@ -882,19 +947,11 @@ async function startRumble() {
 function returnToHome() {
   rumbleRunning = false;
   clearInterval(entrantTimer);
-
-  // Reset runtime state (keep roster so they can re-run)
-  inRing    = [];
-  eliminated = [];
-  entryQueue = [];
-  entryIndex = 0;
-  finalTwoAnnounced = false;
+  inRing = []; eliminated = []; entryQueue = []; entryIndex = 0; finalTwoAnnounced = false;
 
   document.getElementById('rumble-screen').hidden = true;
   document.getElementById('ticker-bar').hidden    = true;
   document.getElementById('setup-screen').hidden  = false;
-
-  // Clear displays for a clean re-run
   document.getElementById('commentary-content').innerHTML = '';
   document.getElementById('ticker-content').innerHTML     = '';
 }
@@ -904,11 +961,16 @@ function returnToHome() {
 // ================================================================
 
 document.addEventListener('DOMContentLoaded', async () => {
-  try {
-    allWrestlers = await fetchWrestlers();
-  } catch {
-    allWrestlers = [];
-  }
+  // Load both data sources in parallel
+  const [wrestlers, moves] = await Promise.allSettled([
+    fetchWrestlers(),
+    fetch('/moves.json').then(r => r.ok ? r.json() : null).catch(() => null),
+  ]);
+
+  allWrestlers = wrestlers.status === 'fulfilled' ? wrestlers.value : [];
+  movesData    = moves.status    === 'fulfilled' ? moves.value    : null;
+
+  if (!movesData) console.warn('moves.json not loaded — signature moves disabled.');
 
   document.getElementById('add-btn').addEventListener('click', addWrestlerToRoster);
   document.getElementById('name-input').addEventListener('keydown', e => {

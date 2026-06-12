@@ -1,0 +1,137 @@
+{
+  "styles": {
+    "Powerhouse": {
+      "standard": [
+        "a thunderous running shoulder block",
+        "a massive big boot",
+        "a crushing bear hug",
+        "a ring-shaking scoop slam",
+        "a relentless series of clubbing right hands",
+        "a devastating military press",
+        "a punishing headbutt",
+        "a bone-jarring sidewalk slam",
+        "a vicious forearm smash",
+        "a rib-cracking body avalanche in the corner"
+      ],
+      "signature": [
+        "the Running Powerslam",
+        "the Gorilla Press Drop",
+        "the Chokeslam",
+        "the Iron Claw",
+        "the World's Strongest Slam",
+        "the Fallaway Slam",
+        "the Dominator",
+        "the Jackhammer",
+        "the Last Ride Powerbomb",
+        "the Torture Rack"
+      ]
+    },
+    "Brawler": {
+      "standard": [
+        "a vicious headbutt",
+        "a grinding knee to the gut",
+        "a raking eye scratch",
+        "a brutal running knee drop",
+        "a thunderous right hook",
+        "a savage boot stomp",
+        "a biting right hand straight to the jaw",
+        "a vicious elbow to the back of the neck",
+        "a dirty chokehold in the corner",
+        "a mean-spirited hair pull takedown"
+      ],
+      "signature": [
+        "the Stone Cold Stunner",
+        "the Bionic Elbow",
+        "the DDT",
+        "the Piledriver",
+        "the Cactus Clothesline",
+        "the Mandible Claw",
+        "the Running Bulldog",
+        "the Mic Check",
+        "the Dirty Deeds",
+        "the Reality Check"
+      ]
+    },
+    "High-Flyer": {
+      "standard": [
+        "a springboard crossbody",
+        "a diving elbow drop",
+        "a moonsault",
+        "a dropkick square to the knee",
+        "a quick hurricanrana",
+        "a senton splash",
+        "a springboard forearm strike",
+        "a snap headscissors takedown",
+        "a top-rope diving clothesline",
+        "a suicide dive through the ropes"
+      ],
+      "signature": [
+        "the 450 Splash",
+        "the Shooting Star Press",
+        "the Swanton Bomb",
+        "the Frog Splash",
+        "the Corkscrew Moonsault",
+        "the Asai Moonsault",
+        "the Phoenix Splash",
+        "the Red Arrow",
+        "the Spiral Tap",
+        "the Dragonrana"
+      ]
+    },
+    "Technical": {
+      "standard": [
+        "a crisp European uppercut",
+        "a precision armbar takedown",
+        "a sharp running knee strike",
+        "a textbook snap suplex",
+        "a methodical wristlock",
+        "a perfectly-executed German suplex",
+        "a calculated dragon screw leg whip",
+        "a precise double underhook facebuster",
+        "a measured half-nelson slam",
+        "a clinical crossbody off the second rope"
+      ],
+      "signature": [
+        "the Sharpshooter",
+        "the Ankle Lock",
+        "the Crossface",
+        "the Walls of Jericho",
+        "the Figure Four Leglock",
+        "the Yes Lock",
+        "the Koji Clutch",
+        "the Rings of Saturn",
+        "the Cattle Mutilation",
+        "the Octopus Hold"
+      ]
+    }
+  },
+
+  "wrestlers": {
+  },
+
+  "commentary": {
+    "signatureHit": [
+      "{A} HITS {D} WITH {MOVE}!! The crowd ERUPTS from every corner of the building!",
+      "{A} just connected with {MOVE} on {D} — PICTURE PERFECT execution!",
+      "{MOVE} FROM {A}! {D} absolutely did NOT see that coming!",
+      "OUT OF NOWHERE — {A} with {MOVE} on {D}! The ring actually SHOOK!",
+      "{A} drops {D} with {MOVE} — FLAWLESS, DEVASTATING execution!",
+      "The signature {MOVE} from {A} connects flush on {D}! This crowd is going absolutely WILD!",
+      "{A} measuring {D} — waiting — AND THERE IT IS! {MOVE}! WHAT A MOVE!",
+      "That is WHY {A} is dangerous — {MOVE} right out of nowhere on {D}!"
+    ],
+    "stolenMove": [
+      "WAIT A MINUTE — {A} just hit {D} with {OWNER}'s OWN {MOVE}! THE ABSOLUTE DISRESPECT!",
+      "OH MY GOD! {A} just used {MOVE} — THAT IS {OWNER}'s MOVE! {D} must be MORTIFIED right now!",
+      "IS THAT — IT IS! {A} just pulled out {OWNER}'s {MOVE} on {D}! I cannot BELIEVE what I just witnessed!",
+      "The AUDACITY of {A}! Using {MOVE} — {OWNER}'s OWN SIGNATURE — right in their FACE! UNBELIEVABLE!",
+      "{A} just hit {MOVE} — WHERE DID THEY LEARN THAT?! That belongs to {OWNER}! The DISRESPECT!",
+      "I have NEVER seen that before — {A} just stole {OWNER}'s {MOVE} and used it on {D}! INCREDIBLE!"
+    ],
+    "signatureTeased": [
+      "{A} sets up for {MOVE} — {D} scrambles away! They know what's coming!",
+      "{D} sees {MOVE} coming from a mile away and dives out of range — smart wrestling!",
+      "{A} almost had {D} in position for {MOVE} — but {D} slips free at the last second!"
+    ]
+  }
+}

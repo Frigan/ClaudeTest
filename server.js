@@ -43,13 +43,30 @@ app.post('/api/wrestlers', async (req, res) => {
     const data = await readDB();
 
     for (const update of updates) {
+      const { elimsThisRumble, ...clean } = update;
       const idx = data.findIndex(
-        w => w.name.toLowerCase() === update.name.toLowerCase()
+        w => w.name.toLowerCase() === clean.name.toLowerCase()
       );
+
       if (idx >= 0) {
-        data[idx] = { ...data[idx], ...update };
+        const s = data[idx].stats || { rumbles: 0, wins: 0, eliminations: 0, timesEliminated: 0 };
+        const newStats = {
+          rumbles:         s.rumbles + 1,
+          wins:            s.wins + (clean.lastRumble.placement === 1 ? 1 : 0),
+          eliminations:    s.eliminations + (elimsThisRumble || 0),
+          timesEliminated: s.timesEliminated + (clean.lastRumble.eliminatedBy ? 1 : 0),
+        };
+        data[idx] = { ...data[idx], ...clean, stats: newStats };
       } else {
-        data.push(update);
+        data.push({
+          ...clean,
+          stats: {
+            rumbles:         1,
+            wins:            clean.lastRumble.placement === 1 ? 1 : 0,
+            eliminations:    elimsThisRumble || 0,
+            timesEliminated: clean.lastRumble.eliminatedBy ? 1 : 0,
+          },
+        });
       }
     }
 
