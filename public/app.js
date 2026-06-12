@@ -370,21 +370,45 @@ function elimOdds(a, d) {
 }
 
 // ================================================================
-// API
+// API  (fetch → localStorage fallback for static hosting)
 // ================================================================
 
+const LS_KEY = 'royalRumbleWrestlers';
+
 async function fetchWrestlers() {
-  const res = await fetch('/api/wrestlers');
-  if (!res.ok) throw new Error('API error');
-  return res.json();
+  try {
+    const res = await fetch('/api/wrestlers');
+    if (!res.ok) throw new Error('no server');
+    return res.json();
+  } catch {
+    try { return JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch { return []; }
+  }
 }
 
 async function saveResults(updates) {
-  await fetch('/api/wrestlers', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(updates),
-  });
+  // Try the Express backend first; fall back to localStorage
+  let usedServer = false;
+  try {
+    const res = await fetch('/api/wrestlers', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updates),
+    });
+    if (res.ok) usedServer = true;
+  } catch { /* no server */ }
+
+  if (!usedServer) {
+    try {
+      const existing = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+      for (const update of updates) {
+        const idx = existing.findIndex(
+          w => w.name.toLowerCase() === update.name.toLowerCase()
+        );
+        idx >= 0 ? (existing[idx] = { ...existing[idx], ...update }) : existing.push(update);
+      }
+      localStorage.setItem(LS_KEY, JSON.stringify(existing));
+    } catch (e) { console.error('localStorage save failed:', e); }
+  }
 }
 
 // ================================================================
