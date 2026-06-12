@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Royal Rumble Simulator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ══════════════ SETUP SCREEN ══════════════ -->
+    <div id="setup-screen">
+      <header class="main-header">
+        <div class="title-block">
+          <span class="title-royal">ROYAL</span>
+          <span class="title-rumble">RUMBLE</span>
+          <span class="title-sub">⚡ SIMULATOR ⚡</span>
+        </div>
+      </header>
+
+      <div class="setup-grid">
+
+        <!-- Add wrestler form -->
+        <div class="panel" id="add-panel">
+          <h2 class="panel-title">ADD WRESTLER</h2>
+          <div class="form-group">
+            <label for="name-input">WRESTLER NAME</label>
+            <input type="text" id="name-input" placeholder="Enter name…" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="style-select">FIGHTING STYLE</label>
+            <select id="style-select">
+              <option value="">— SELECT STYLE —</option>
+              <option value="Brawler">Brawler</option>
+              <option value="High-Flyer">High-Flyer</option>
+              <option value="Technical">Technical</option>
+              <option value="Powerhouse">Powerhouse</option>
+            </select>
+          </div>
+          <button id="add-btn" class="btn-primary">ADD TO ROSTER</button>
+
+          <div class="style-guide">
+            <h3>⚔ STYLE ADVANTAGE LOOP</h3>
+            <div class="matchup powerhouse-text">Powerhouse ➤ Brawler</div>
+            <div class="matchup brawler-text">Brawler ➤ High-Flyer</div>
+            <div class="matchup flyer-text">High-Flyer ➤ Technical</div>
+            <div class="matchup technical-text">Technical ➤ Powerhouse</div>
+            <p class="style-note">Favoured style wins 65% of clashes</p>
+          </div>
+        </div>
+
+        <!-- Roster panel -->
+        <div class="panel" id="roster-panel">
+          <h2 class="panel-title">ROSTER &nbsp;<span id="roster-count" class="count-badge">0</span></h2>
+          <div id="roster-list"></div>
+          <button id="start-btn" class="btn-rumble" disabled>
+            ⚡ &nbsp;START THE ROYAL RUMBLE&nbsp; ⚡
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══════════════ RUMBLE SCREEN ══════════════ -->
+    <div id="rumble-screen" hidden>
+
+      <div class="rumble-hud">
+        <div class="hud-panel" id="ring-panel">
+          <h3 class="hud-title">IN THE RING &nbsp;<span id="ring-count" class="count-badge">0</span></h3>
+          <div id="in-ring-list"></div>
+        </div>
+
+        <div class="hud-panel" id="next-panel">
+          <h3 class="hud-title">NEXT ENTRANTS</h3>
+          <div id="next-list"></div>
+        </div>
+
+        <div class="hud-panel" id="stats-panel">
+          <h3 class="hud-title">REMAINING</h3>
+          <div id="remaining-count" class="big-stat">—</div>
+          <div id="eliminated-stat" class="small-stat">0 eliminated</div>
+        </div>
+      </div>
+
+      <div id="commentary-box">
+        <div id="commentary-header">📺 &nbsp;LIVE COMMENTARY</div>
+        <div id="commentary-content"></div>
+      </div>
+
+    </div>
+
+    <!-- ══════════════ ELIMINATION TICKER ══════════════ -->
+    <div id="ticker-bar" hidden>
+      <span class="ticker-label">ELIMINATED:</span>
+      <div class="ticker-track">
+        <div id="ticker-content"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "royal-rumble-simulator",
+  "version": "1.0.0",
+  "description": "Narrative Royal Rumble simulator with Node.js backend and JSON persistence",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
